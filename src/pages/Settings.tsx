@@ -6,10 +6,7 @@ const Settings = () => {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // remove login token
-    navigate("/login"); // redirect to login page
-  };
+  
 
   return (
     <div className="max-w-md mx-auto mt-8 space-y-6">
@@ -19,13 +16,7 @@ const Settings = () => {
   </p>
   <ChangePassword />
 
-  <button
-    onClick={handleLogout}
-    className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md mt-8"
-  >
-    Sign Out
-  </button>
-
+  
 </div>
   );
 };

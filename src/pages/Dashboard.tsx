@@ -100,6 +100,7 @@ const fadeUp = {
 const Dashboard = () => {
   const [tab, setTab] = useState<"videos" | "notes">("videos");
   const [bookmarks, setBookmarks] = useState(savedVideos);
+  
   const navigate = useNavigate();
 
   const removeBookmark = (id: number) => {
@@ -109,11 +110,6 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 pb-24 md:pb-12">
-     
-
-     
-    
-
       {/* ── Quick Actions ── */}
       <motion.div {...fadeUp} className="mb-8">
         <h2 className="font-bold text-lg mb-3">Quick Actions</h2>
@@ -180,6 +176,9 @@ const Dashboard = () => {
                 </div>
                 <button className="h-9 px-4 rounded-lg bg-primary/10 text-primary text-sm font-medium hover:bg-primary/15 transition-colors w-full flex items-center justify-center gap-1.5">
                   View Notes <ChevronRight className="w-4 h-4" />
+                </button>
+                <button className="h-9 px-4 rounded-lg bg-primary/10 text-primary text-sm font-medium hover:bg-primary/15 transition-colors w-full flex items-center justify-center gap-1.5 mt-4">
+                  View Summary <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
