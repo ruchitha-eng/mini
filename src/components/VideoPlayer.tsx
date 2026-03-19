@@ -5,9 +5,15 @@ import { toast } from "sonner";
 interface VideoPlayerProps {
   onGenerateSummary: () => void;
   onGenerateQuiz: () => void;
+  onGenerateMCQ: () => void;
+  setActiveTab: (tab: string) => void;   // ✅ ADD THIS
 }
 
-const VideoPlayer = ({ onGenerateSummary, onGenerateQuiz }: VideoPlayerProps) => {
+const VideoPlayer = ({ 
+  onGenerateSummary, 
+  onGenerateQuiz, 
+   onGenerateMCQ,setActiveTab 
+}: VideoPlayerProps) => {
   const [url, setUrl] = useState("");
   const [videoId, setVideoId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -28,13 +34,28 @@ const VideoPlayer = ({ onGenerateSummary, onGenerateQuiz }: VideoPlayerProps) =>
   };
 
   const handleGenerate = (action: () => void, label: string) => {
-    setLoading(true);
-    setTimeout(() => {
-      action();
-      setLoading(false);
-      toast.success(`${label} generated!`);
-    }, 1500);
-  };
+  setLoading(true);
+
+  setTimeout(() => {
+    action();
+    setLoading(false);
+    toast.success(`${label} generated!`);
+
+    // ✅ THIS IS THE MAIN FIX
+    if (label === "Quiz") {
+      setActiveTab("mcq");
+    }
+
+    if (label === "Summary") {
+      setActiveTab("summary");
+    }
+
+    if (label === "Practice") {
+      setActiveTab("practice");
+    }
+
+  }, 1500);
+};
 
   return (
     <div className="space-y-5">
@@ -57,30 +78,17 @@ const VideoPlayer = ({ onGenerateSummary, onGenerateQuiz }: VideoPlayerProps) =>
 
       {/* Action Buttons */}
       <div className="flex gap-3 flex-wrap">
-        <button
-          onClick={() => handleGenerate(onGenerateSummary, "Summary")}
-          disabled={loading}
-          className="h-10 px-4 rounded-lg bg-primary/10 text-primary text-sm font-medium flex items-center gap-2 hover:bg-primary/15 transition-colors disabled:opacity-50"
-        >
-          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-          Generate Summary
-        </button>
-        <button
-          onClick={() => handleGenerate(onGenerateQuiz, "Quiz")}
-          disabled={loading}
-          className="h-10 px-4 rounded-lg bg-primary/10 text-primary text-sm font-medium flex items-center gap-2 hover:bg-primary/15 transition-colors disabled:opacity-50"
-        >
-          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <HelpCircle className="w-4 h-4" />}
-          Generate Practice questions
-        </button>
-         <button
-          onClick={() => handleGenerate(onGenerateQuiz, "Quiz")}
-          disabled={loading}
-          className="h-10 px-4 rounded-lg bg-primary/10 text-primary text-sm font-medium flex items-center gap-2 hover:bg-primary/15 transition-colors disabled:opacity-50"
-        >
-          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <HelpCircle className="w-4 h-4" />}
-          Generate Quiz
-        </button>
+        <button onClick={() => handleGenerate(onGenerateSummary, "Summary")} className="bg-primary text-white px-5 py-2 rounded-xl">
+  Generate Summary
+</button>
+
+<button onClick={() => handleGenerate(onGenerateQuiz, "Practice")} className="bg-primary text-white px-5 py-2 rounded-xl">
+  Generate Practice questions
+</button>
+
+<button onClick={() => handleGenerate(onGenerateMCQ, "Quiz")} className="bg-primary text-white px-5 py-2 rounded-xl">
+  Generate Quiz
+</button>
       </div>
 
       {/* Video Embed */}

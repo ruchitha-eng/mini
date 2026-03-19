@@ -10,22 +10,20 @@ import { FileText, HelpCircle } from "lucide-react";
 const HomePage = () => {
 
   const [videoId, setVideoId] = useState<string | null>(null);
-  const [showSummary, setShowSummary] = useState(false);
-  const [showQuiz, setShowQuiz] = useState(false);
+  
   const [activeTab, setActiveTab] = useState("");
 
   const handleGenerateNotes = () => {
-    setActiveTab("notes");
-    setShowSummary(true);
-    setShowQuiz(false);
-  };
+  setActiveTab("notes");
+};
 
-  const handleGenerateQuiz = () => {
-    setActiveTab("quiz");
-    setShowQuiz(true);
-    setShowSummary(false);
-  };
+const handleGenerateQuiz = () => {
+  setActiveTab("practice");   // your existing quiz
+};
 
+const handleGenerateMCQ = () => {
+  setActiveTab("mcq");        // new MCQ quiz
+};
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8 pb-24 md:pb-8">
@@ -75,13 +73,12 @@ const HomePage = () => {
               </motion.div>
             )}
           </AnimatePresence>
-
-          <VideoPlayer
-            onGenerateSummary={() => setShowSummary(true)}
-            onGenerateQuiz={() => setShowQuiz(true)}
-          />
-
-          <AINotes showSummary={showSummary} showQuiz={showQuiz} />
+            <VideoPlayer
+      onGenerateSummary={() => setActiveTab("summary")}
+       onGenerateQuiz={() => setActiveTab("practice")}
+        onGenerateMCQ={() => setActiveTab("mcq")}   // ✅ ADD THIS
+        />
+          <AINotes activeTab={activeTab} />
 
         </div>
 

@@ -14,7 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-import Summary from "./pages/Summary";
+import Summary from "./components/Summary";
 
 const queryClient = new QueryClient();
 
