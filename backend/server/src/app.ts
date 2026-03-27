@@ -8,11 +8,9 @@ const app: Application = express();
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL||"http://localhost:8080"|| "http://localhost:8081" ,
+    origin: "http://localhost:8081", // ✅ FIX THIS
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
+  })
 );
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));

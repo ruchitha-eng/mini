@@ -6,16 +6,15 @@ import bcrypt from "bcryptjs";
 
 export const changePassword = async (req:Request, res:Response) => {
   try {
-    const { email, oldPassword, newPassword } = req.body;
-
-    // 1. Find user
-    const user = await User.findOne({ email });
+   const { currentPassword, newPassword } = req.body;
+    //find user by userid
+  const user = await User.findById(req.user?.userId);
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
 
     // 2. Check old password
-    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Old password is incorrect" });
     }

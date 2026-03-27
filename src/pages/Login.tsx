@@ -32,11 +32,13 @@ const Login = () => {
     }
 
     // ✅ Store token
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-
+    localStorage.setItem("token", data.data.token);
+    localStorage.setItem("user", JSON.stringify(data.data.user));
+    console.log("response:", data);
+    console.log("FULL RESPONSE:", data);
+    console.log("TOKEN:", data.data.token);
     toast.success("Logged in successfully!");
-
+    
     navigate("/dashboard");
   } catch (error) {
     toast.error("Something went wrong");
