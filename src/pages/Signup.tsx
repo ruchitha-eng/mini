@@ -9,15 +9,45 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (form.password !== form.confirm) {
-      toast.error("Passwords don't match");
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (form.password !== form.confirm) {
+    toast.error("Passwords do not match");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.message || "Signup failed");
       return;
     }
+
     toast.success("Account created successfully!");
-    navigate("/home");
-  };
+
+    // 👉 Option 1: Redirect to login
+    navigate("/dashboard");
+
+    // 👉 Option 2 (better): auto-login after signup (see below 👇)
+
+  } catch (error) {
+    toast.error("Something went wrong");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6">

@@ -5,25 +5,46 @@ const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (newPassword !== confirmPassword) {
-      alert("New passwords do not match");
+  if (newPassword !== confirmPassword) {
+    alert("New passwords do not match");
+    return;
+  }
+
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:5000/api/auth/change-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // 🔥 VERY IMPORTANT
+      },
+      body: JSON.stringify({
+        currentPassword,
+        newPassword,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Failed to change password");
       return;
     }
 
-    // Later connect this to backend API
-    console.log({
-      currentPassword,
-      newPassword,
-    });
-
     alert("Password changed successfully!");
+
     setCurrentPassword("");
     setNewPassword("");
     setConfirmPassword("");
-  };
+
+  } catch (error) {
+    alert("Something went wrong");
+  }
+};
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md mt-6 w-full max-w-md">

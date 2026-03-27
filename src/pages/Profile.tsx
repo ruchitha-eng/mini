@@ -7,7 +7,8 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem("user");
+    navigate("/", { replace: true });
   };
 return (
   <div className="max-w-3xl mx-auto px-6 py-12 pb-24 md:pb-12 ">
