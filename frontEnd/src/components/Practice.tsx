@@ -1,18 +1,13 @@
 import { useState } from "react";
 
-const questions = [
-  {
-    q: "What is uncertainty principle?",
-    a: "You cannot measure position and momentum together."
-  },
-  {
-    q: "What experiment shows wave duality?",
-    a: "Double slit experiment"
-  }
-];
+interface PracticeProps {
+  data?: Array<{ q: string; a: string }>;
+}
 
-const Practice = () => {
+const Practice = ({ data }: PracticeProps) => {
   const [show, setShow] = useState<{ [key: number]: boolean }>({});
+
+  const questions = data || [];
 
   return (
     <div className="space-y-4">

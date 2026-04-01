@@ -9,13 +9,19 @@ interface Note {
   text: string;
 }
 
-const initialNotes: Note[] = [
-  { id: 1, timestamp: "0:45", text: "What is quantum mechanics?" },
-  { id: 2, timestamp: "2:10", text: "Wave particle duality explained" },
-  { id: 3, timestamp: "5:30", text: "Uncertainty principle" },
-];
+interface NotesPanelProps {
+  notes?: Array<{ time: string; text: string }>;
+}
 
-const NotesPanel = () => {
+const NotesPanel = ({ notes: aiNotes }: NotesPanelProps) => {
+  const initialNotes: Note[] = aiNotes
+    ? aiNotes.map((n, i) => ({ id: i + 1, timestamp: n.time, text: n.text }))
+    : [
+        { id: 1, timestamp: "0:45", text: "What is quantum mechanics?" },
+        { id: 2, timestamp: "2:10", text: "Wave particle duality explained" },
+        { id: 3, timestamp: "5:30", text: "Uncertainty principle" },
+      ];
+
   const [notes, setNotes] = useState<Note[]>(initialNotes);
   const [newNote, setNewNote] = useState("");
 
