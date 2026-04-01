@@ -44,7 +44,7 @@ const VideoPlayer = ({
       setIsGenerating(true);
       toast.info("Connecting to AI services...");
       // Auto-trigger full generation!
-      await callGenerate("summary", "Complete Content", onGenerateSummary);
+      await callGenerate("summary`, "Complete Content`, onGenerateSummary);
     } else {
       toast.error("Please enter a valid YouTube URL");
     }
@@ -66,7 +66,7 @@ const VideoPlayer = ({
     setLoading(label);
     setIsGenerating(true);
     try {
-      const res = await fetch("http://localhost:5001/api/learning/generate", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -44,7 +44,7 @@ const Dashboard = () => {
     if (!token) return;
     setLoadingHistory(true);
     try {
-      const res = await fetch("http://localhost:5001/api/learning/history", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/history`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -61,7 +61,7 @@ const Dashboard = () => {
     if (!token) return;
     setClearing(true);
     try {
-      const res = await fetch("http://localhost:5001/api/learning/clear", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/clear`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -89,8 +89,8 @@ const Dashboard = () => {
         <h2 className="font-bold text-lg mb-3">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
           {[
-            { label: "Add YouTube Video", icon: Plus, action: () => navigate("/home") },
-            { label: "Create Manual Notes", icon: NotebookPen, action: () => navigate("/home") },
+            { label: "Add YouTube Video`, icon: Plus, action: () => navigate("/home") },
+            { label: "Create Manual Notes`, icon: NotebookPen, action: () => navigate("/home") },
           ].map((btn) => (
             <button
               key={btn.label}
@@ -160,8 +160,8 @@ const Dashboard = () => {
                 <h3 className="font-bold mb-1 line-clamp-2">{entry.title}</h3>
                 <p className="text-xs text-muted-foreground mb-3 flex items-center gap-1.5">
                   <Clock className="w-3 h-3" />
-                  {new Date(entry.createdAt).toLocaleDateString("en-IN", {
-                    month: "long", day: "numeric", year: "numeric",
+                  {new Date(entry.createdAt).toLocaleDateString("en-IN`, {
+                    month: "long`, day: "numeric`, year: "numeric",
                   })}
                 </p>
 

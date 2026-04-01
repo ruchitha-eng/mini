@@ -10,7 +10,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   
   const userStr = localStorage.getItem("user");
-  const user = userStr ? JSON.parse(userStr) : { name: "Learner", email: "learner@example.com" };
+  const user = userStr ? JSON.parse(userStr) : { name: "Learner`, email: "learner@example.com" };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -18,7 +18,7 @@ const Profile = () => {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5001/api/learning/history", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/history`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -35,7 +35,7 @@ const Profile = () => {
           });
         }
       } catch (err) {
-        console.error("Failed to fetch stats", err);
+        console.error("Failed to fetch stats`, err);
       } finally {
         setLoading(false);
       }
@@ -47,7 +47,7 @@ const Profile = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/", { replace: true });
+    navigate("/`, { replace: true });
   };
 
   return (

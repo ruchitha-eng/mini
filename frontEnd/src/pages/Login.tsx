@@ -7,13 +7,13 @@ import { toast } from "sonner";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ email: "`, password: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
   try {
-    const res = await fetch("http://localhost:5001/api/auth/login", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,11 +32,11 @@ const Login = () => {
     }
 
     // ✅ Store token
-    localStorage.setItem("token", data.data.token);
-    localStorage.setItem("user", JSON.stringify(data.data.user));
-    console.log("response:", data);
-    console.log("FULL RESPONSE:", data);
-    console.log("TOKEN:", data.data.token);
+    localStorage.setItem("token`, data.data.token);
+    localStorage.setItem("user`, JSON.stringify(data.data.user));
+    console.log("response:`, data);
+    console.log("FULL RESPONSE:`, data);
+    console.log("TOKEN:`, data.data.token);
     toast.success("Logged in successfully!");
     
     navigate("/dashboard");
@@ -56,7 +56,7 @@ const Login = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", duration: 0.5, bounce: 0 }}
+        transition={{ type: "spring`, duration: 0.5, bounce: 0 }}
         className="w-full max-w-md"
       >
         <div className="text-center mb-8">
