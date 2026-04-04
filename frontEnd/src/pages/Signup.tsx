@@ -7,7 +7,7 @@ import { toast } from "sonner";
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({ name: "`, email: "`, password: "`, confirm: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
 
  const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -54,7 +54,7 @@ const Signup = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring`, duration: 0.5, bounce: 0 }}
+        transition={{ type: "spring", duration: 0.5, bounce: 0 }}
         className="w-full max-w-md"
       >
         <div className="text-center mb-8">

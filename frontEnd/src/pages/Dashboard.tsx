@@ -89,8 +89,8 @@ const Dashboard = () => {
         <h2 className="font-bold text-lg mb-3">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
           {[
-            { label: "Add YouTube Video`, icon: Plus, action: () => navigate("/home") },
-            { label: "Create Manual Notes`, icon: NotebookPen, action: () => navigate("/home") },
+            { label: "Add YouTube Video", icon: Plus, action: () => navigate("/home") },
+            { label: "Create Manual Notes", icon: NotebookPen, action: () => navigate("/home") },
           ].map((btn) => (
             <button
               key={btn.label}
@@ -160,8 +160,8 @@ const Dashboard = () => {
                 <h3 className="font-bold mb-1 line-clamp-2">{entry.title}</h3>
                 <p className="text-xs text-muted-foreground mb-3 flex items-center gap-1.5">
                   <Clock className="w-3 h-3" />
-                  {new Date(entry.createdAt).toLocaleDateString("en-IN`, {
-                    month: "long`, day: "numeric`, year: "numeric",
+                  {new Date(entry.createdAt).toLocaleDateString("en-IN", {
+                    month: "long", day: "numeric", year: "numeric",
                   })}
                 </p>
 
@@ -186,6 +186,20 @@ const Dashboard = () => {
                   >
                     <Play className="w-4 h-4" /> Rewatch & Generate
                   </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => navigate(`/summary/${entry._id}`)}
+                      className="h-9 px-4 rounded-lg bg-muted text-muted-foreground text-xs font-medium hover:bg-muted/80 transition-colors flex-1 flex items-center justify-center gap-1.5"
+                    >
+                      <FileText className="w-3.5 h-3.5" /> View Summary
+                    </button>
+                    <button
+                      onClick={() => navigate(`/notes/${entry._id}`)}
+                      className="h-9 px-4 rounded-lg bg-muted text-muted-foreground text-xs font-medium hover:bg-muted/80 transition-colors flex-1 flex items-center justify-center gap-1.5"
+                    >
+                      <StickyNote className="w-3.5 h-3.5" /> View Notes
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>

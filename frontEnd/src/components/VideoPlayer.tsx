@@ -44,7 +44,7 @@ const VideoPlayer = ({
       setIsGenerating(true);
       toast.info("Connecting to AI services...");
       // Auto-trigger full generation!
-      await callGenerate("summary`, "Complete Content`, onGenerateSummary);
+      await callGenerate("summary", "Complete Content", onGenerateSummary);
     } else {
       toast.error("Please enter a valid YouTube URL");
     }

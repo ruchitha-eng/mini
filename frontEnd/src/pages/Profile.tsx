@@ -10,7 +10,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   
   const userStr = localStorage.getItem("user");
-  const user = userStr ? JSON.parse(userStr) : { name: "Learner`, email: "learner@example.com" };
+  const user = userStr ? JSON.parse(userStr) : { name: "Learner", email: "learner@example.com" };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -22,20 +22,19 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
-        
-        if (res.ok) {
+                if (res.ok) {
           const history = data.data || [];
           const totalNotes = history.reduce((acc: number, item: any) => acc + (item.notes?.length || 0), 0);
-          const totalQuizzes = history.reduce((acc: number, item: any) => acc + (item.quiz?.length || 0), 0);
+          const submittedQuizzes = history.filter((item: any) => item.quiz?.length > 0).length;
           
           setStats({
             videos: history.length,
             notes: totalNotes,
-            quizzes: totalQuizzes
+            quizzes: submittedQuizzes
           });
         }
       } catch (err) {
-        console.error("Failed to fetch stats`, err);
+        console.error("Failed to fetch stats", err);
       } finally {
         setLoading(false);
       }
@@ -47,7 +46,7 @@ const Profile = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/`, { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (
@@ -83,7 +82,7 @@ const Profile = () => {
               </div>
               <div className="bg-primary/5 border border-primary/10 rounded-2xl p-6 text-center">
                 <p className="text-3xl font-bold text-primary">{stats.quizzes}</p>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mt-1">Quizzes Available</p>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mt-1">Quizzes Submitted</p>
               </div>
             </div>
           )}

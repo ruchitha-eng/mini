@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import VideoPlayer from "@/components/VideoPlayer";
 import NotesPanel from "@/components/NotesPanel";
 import AINotes from "@/components/AINotes";
@@ -12,9 +12,19 @@ interface LearningData {
 }
 
 const HomePage = () => {
-  const [activeTab, setActiveTab] = useState("");
-  const [learningData, setLearningData] = useState<LearningData | undefined>(undefined);
+  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("activeTab") || "");
+  const [learningData, setLearningData] = useState<LearningData | undefined>(() => {
+    const saved = localStorage.getItem("learningData");
+    return saved ? JSON.parse(saved) : undefined;
+  });
   const [isGenerating, setIsGenerating] = useState(false);
+
+  useEffect(() => {
+    if (learningData) {
+      localStorage.setItem("learningData", JSON.stringify(learningData));
+    }
+    localStorage.setItem("activeTab", activeTab);
+  }, [learningData, activeTab]);
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8 pb-24 md:pb-8">
