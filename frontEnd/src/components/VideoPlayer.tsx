@@ -66,7 +66,7 @@ const VideoPlayer = ({
     setLoading(label);
     setIsGenerating(true);
     try {
-      const res = await fetch("http://localhost:5001/api/learning/generate", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -132,3 +132,19 @@ export const clearHistory = async (req: Request, res: Response): Promise<void> =
     res.status(500).json({ success: false, message: "Failed to clear history." });
   }
 };
+
+export const getLearningById = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const userId = (req as any).user?.userId;
+  
+  try {
+    const learning = await Learning.findOne({ _id: id, userId });
+    if (!learning) {
+      res.status(404).json({ success: false, message: "Content not found." });
+      return;
+    }
+    res.status(200).json({ success: true, data: learning });
+  } catch {
+    res.status(500).json({ success: false, message: "Failed to fetch content." });
+  }
+};

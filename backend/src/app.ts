@@ -15,12 +15,10 @@ app.use((req, res, next) => {
 app.use(
   cors({
     origin: [
-      "http://localhost:8080",
-      "http://127.0.0.1:8080",
-      "http://localhost:8081",
-      "http://127.0.0.1:8081",
+      process.env.CLIENT_URL || "http://localhost:8080",
       "http://localhost:5173",
-      "http://localhost:8082",
+      "http://localhost:3000",
+      "http://127.0.0.1:8080",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

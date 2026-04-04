@@ -1,28 +1,66 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { ArrowLeft, FileText, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import "./Summary.css";
 
 function Summaryhome() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [summary, setSummary] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const allSummaries = {
-      1: "Quantum mechanics explains the behavior of particles at atomic level. It includes concepts like wave-particle duality and uncertainty principle.",
-      2: "Machine learning is a field of AI where systems learn from data. It includes supervised and unsupervised learning techniques.",
-      3: "Organic chemistry is the study of carbon compounds \n structure+Functional group +Reaction"
+    const fetchSummary = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/item/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (res.ok) {
+          setSummary(data.data.summary);
+        } else {
+          toast.error(data.message || "Failed to load summary");
+        }
+      } catch (err) {
+        toast.error("Could not connect to server");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    setSummary(allSummaries[id] || "No summary available");
+    if (id) fetchSummary();
   }, [id]);
 
   return (
-    <div className="container">
-      <h2 className="heading">📝 Summary for Video {id}</h2>
+    <div className="max-w-4xl mx-auto px-6 py-12">
+      <button 
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+      </button>
 
-      <div className="summary-card">
-        <p>{summary}</p>
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
+          <FileText className="w-5 h-5 text-primary-foreground" />
+        </div>
+        <h2 className="text-2xl font-bold">Video Summary</h2>
       </div>
+
+      {loading ? (
+        <div className="bg-card rounded-2xl p-12 flex flex-col items-center justify-center gap-4 shadow-card">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <p className="text-muted-foreground animate-pulse">Loading summary...</p>
+        </div>
+      ) : (
+        <div className="bg-card rounded-2xl p-8 shadow-card border border-border/50">
+          <div className="prose prose-sm max-w-none text-foreground/90 leading-relaxed whitespace-pre-wrap">
+            {summary || "No summary available for this video."}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

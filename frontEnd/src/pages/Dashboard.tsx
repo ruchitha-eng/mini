@@ -44,7 +44,7 @@ const Dashboard = () => {
     if (!token) return;
     setLoadingHistory(true);
     try {
-      const res = await fetch("http://localhost:5001/api/learning/history", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/history`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -61,7 +61,7 @@ const Dashboard = () => {
     if (!token) return;
     setClearing(true);
     try {
-      const res = await fetch("http://localhost:5001/api/learning/clear", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/clear`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -186,6 +186,20 @@ const Dashboard = () => {
                   >
                     <Play className="w-4 h-4" /> Rewatch & Generate
                   </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => navigate(`/summary/${entry._id}`)}
+                      className="h-9 px-4 rounded-lg bg-muted text-muted-foreground text-xs font-medium hover:bg-muted/80 transition-colors flex-1 flex items-center justify-center gap-1.5"
+                    >
+                      <FileText className="w-3.5 h-3.5" /> View Summary
+                    </button>
+                    <button
+                      onClick={() => navigate(`/notes/${entry._id}`)}
+                      className="h-9 px-4 rounded-lg bg-muted text-muted-foreground text-xs font-medium hover:bg-muted/80 transition-colors flex-1 flex items-center justify-center gap-1.5"
+                    >
+                      <StickyNote className="w-3.5 h-3.5" /> View Notes
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>

@@ -18,20 +18,19 @@ const Profile = () => {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5001/api/learning/history", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/learning/history`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
-        
-        if (res.ok) {
+                if (res.ok) {
           const history = data.data || [];
           const totalNotes = history.reduce((acc: number, item: any) => acc + (item.notes?.length || 0), 0);
-          const totalQuizzes = history.reduce((acc: number, item: any) => acc + (item.quiz?.length || 0), 0);
+          const submittedQuizzes = history.filter((item: any) => item.quiz?.length > 0).length;
           
           setStats({
             videos: history.length,
             notes: totalNotes,
-            quizzes: totalQuizzes
+            quizzes: submittedQuizzes
           });
         }
       } catch (err) {
@@ -83,7 +82,7 @@ const Profile = () => {
               </div>
               <div className="bg-primary/5 border border-primary/10 rounded-2xl p-6 text-center">
                 <p className="text-3xl font-bold text-primary">{stats.quizzes}</p>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mt-1">Quizzes Available</p>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mt-1">Quizzes Submitted</p>
               </div>
             </div>
           )}
